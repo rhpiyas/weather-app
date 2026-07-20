@@ -71,8 +71,16 @@ body {
 }
 
 .footer {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 20px;
     margin-top: 20px;
-    font-size: 0.9rem;
+    color: rgba(238, 244, 255, 0.72);
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-align: center;
+    text-transform: uppercase;
     color: rgba(255, 255, 255, 0.9);
     text-align: center;
 }
