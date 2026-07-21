@@ -17,6 +17,7 @@ async function main()
         }
 
         const data = await raw.json();
+        console.log(data)
         target.innerHTML = data.current.temperature_2m + " °C";
     }
     catch(arr)
