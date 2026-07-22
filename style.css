@@ -19,11 +19,11 @@ body {
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
     color: var(--text-main);
     padding: 24px;
+	gap: 20px;
 }
 
 .app-card {
@@ -71,17 +71,145 @@ body {
 }
 
 .footer {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 20px;
-    margin-top: 20px;
-    color: rgb(0, 8, 21);
-    font-size: 0.75rem;
-    letter-spacing: 0.12em;
-    text-align: center;
-    text-transform: uppercase;
-    text-align: center;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	flex-wrap: wrap;
+	width: min(1200px, calc(100% - 32px));
+	margin: auto auto 10px;
+	padding: 18px 22px;
+	border: 1px solid rgba(255, 255, 255, 0.24);
+	border-radius: 24px;
+	background: rgba(255, 255, 255, 0.14);
+	backdrop-filter: blur(14px);
+	-webkit-backdrop-filter: blur(14px);
+	box-shadow: 0 18px 40px var(--shadow);
+	color: var(--text-main);
+	font-size: 0.78rem;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	margin-top: auto;
+}
+
+.footer p {
+	margin: 0;
+	font-weight: 700;
+	color: var(--text-main);
+}
+
+.social-links {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 12px;
+	flex-wrap: wrap;
+}
+
+.social-links a {
+	width: 42px;
+	height: 42px;
+	display: inline-grid;
+	place-items: center;
+	border-radius: 50%;
+	border: 1px solid rgba(255, 255, 255, 0.28);
+	background: rgba(255, 255, 255, 0.16);
+	color: var(--text-main);
+	transition: transform 180ms ease, background 180ms ease, color 180ms ease, box-shadow 180ms ease;
+}
+
+.social-links a:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 14px 24px rgba(20, 28, 45, 0.12);
+}
+
+.social-links a.instagram:hover {
+	color: #e1306c;
+}
+
+.social-links a.linkedin:hover {
+	color: #0a66c2;
+}
+
+.social-links a.github:hover {
+	color: #111827;
+}
+
+.social-links a.codeforces:hover {
+	color: #1f6feb;
+}
+
+.social-links a i,
+.social-links a img {
+	display: block;
+	font-size: 1.1rem;
+	line-height: 1;
+}
+
+.social-links a.codeforces i {
+	font-size: 1.15rem;
+}
+
+@media (max-width: 1080px) {
+	.hero-grid,
+	.explorer-layout,
+	.checker-grid,
+	.waiver-grid,
+	.feature-grid,
+	.admin-grid,
+	.hall-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.card-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.footer {
+		width: min(100% - 18px, 1200px);
+		padding: 16px 18px;
+	}
+}
+
+@media (max-width: 640px) {
+	.footer {
+		flex-direction: column;
+		text-align: center;
+	}
+}
+
+@media (max-width: 760px) {
+	.page-shell {
+		width: min(100% - 18px, 1200px);
+		padding-top: 10px;
+	}
+
+	.hero,
+	.section {
+		padding: 18px;
+		border-radius: 24px;
+	}
+
+	.topbar {
+		align-items: flex-start;
+		flex-direction: column;
+	}
+
+	.hero-copy h1 {
+		font-size: clamp(2.4rem, 14vw, 4rem);
+	}
+
+	.hero-stats {
+		grid-template-columns: 1fr;
+	}
+
+	.table-card {
+		overflow-x: auto;
+	}
+
+	table {
+		min-width: 540px;
+	}
 }
 
 .footer a {
