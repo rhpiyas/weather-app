@@ -1,6 +1,8 @@
 # 🌤️ Weather App
 
-A simple and responsive Weather App built using **HTML**, **CSS**, and **JavaScript**. This application fetches real-time weather data from the **Open-Meteo API** using the Fetch API and displays the current temperature.
+A simple and responsive Weather App built using **HTML**, **CSS**, and **JavaScript**. This application fetches real-time weather data from the **Open-Meteo API** using the Fetch API and displays the current temperature.  
+
+### Preview link : [https://rhpiyas.github.io/weather-app/]
 
 ## ✨ Features
 
