@@ -27,7 +27,6 @@ weather-app/
 │── index.html
 │── style.css
 │── index.js
-│── screenshot.png
 └── README.md
 ```
 
@@ -42,14 +41,6 @@ git clone https://github.com/your-username/weather-app.git
 2. Open the project folder.
 
 3. Run `index.html` in your browser.
-
-## 📸 Screenshot
-
-> Add a screenshot of your application here.
-
-```md
-![Weather App Screenshot](screenshot.png)
-```
 
 ## 📖 What I Learned
 
