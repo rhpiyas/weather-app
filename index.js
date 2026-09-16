@@ -7,6 +7,7 @@ async function main()
     let target2 = document.getElementsByClassName("rain")[0]
     let locationTarget = document.getElementsByClassName("city")[0]
     let hourlyRainList = document.getElementsByClassName("hourly-rain-list")[0]
+    let hourlyRainTitle = document.getElementById("hourly-rain-title")
     let rainProbabilityTarget = document.getElementsByClassName("rain-probability")[0]
     let adviceTarget = document.getElementsByClassName("advice-message")[0]
 
@@ -14,30 +15,30 @@ async function main()
     {
         if(probability < 20)
         {
-            return "বৃষ্টির সম্ভাবনা এত কম যে ছাতা নিলে ছাতাই আপনাকে নিয়ে হাসবে";
+            return "☀️ বৃষ্টির সম্ভাবনা এত কম যে ছাতা নিলে ছাতাই আপনাকে নিয়ে হাসবে";
         }
 
         if(probability < 40)
         {
-            return "আকাশ একটু ভাব নিচ্ছে; ছাতা নিলে নিরাপদ, না নিলে সাহসের পরীক্ষা";
+            return "🌥️ আকাশ একটু ভাব নিচ্ছে; ছাতা নিলে নিরাপদ, না নিলে সাহসের পরীক্ষা";
         }
 
         if(probability < 60)
         {
-            return "ছাতা সঙ্গে রাখুন; ভিজে গেলে চুলের সাজসজ্জা নিজেই নতুন নকশা নেবে";
+            return "🌂 ছাতা সঙ্গে রাখুন; ভিজে গেলে চুলের সাজসজ্জা নিজেই নতুন নকশা নেবে";
         }
 
         if(probability < 80)
         {
-            return "ছাতা ছাড়া বের হলে ভিজে ফিরে এসে আবহাওয়াকে দোষ দিয়ে লাভ হবে না";
+            return "🌧️ ছাতা ছাড়া বের হলে ভিজে ফিরে এসে আবহাওয়াকে দোষ দিয়ে লাভ হবে না";
         }
 
         if(probability < 95)
         {
-            return "বৃষ্টি নামার মহড়া চলছে; ছাতা ছাড়া বের হলে আপনিই হবেন ভেজা খবর";
+            return "⛈️ বৃষ্টি নামার মহড়া চলছে; ছাতা ছাড়া বের হলে আপনিই হবেন ভেজা খবর";
         }
 
-        return "বৃষ্টি প্রায় নিশ্চিত; ছাতা নিন, না হলে রাস্তার মাছ আপনাকে আত্মীয় ভাবতে পারে";
+        return "🌊 বৃষ্টি প্রায় নিশ্চিত; ছাতা নিন, না হলে রাস্তার মাছ আপনাকে আত্মীয় ভাবতে পারে";
     }
 
     function updateCurrentDateTime()
@@ -102,18 +103,30 @@ async function main()
 
                 console.log(locationData);
 
-                locationTarget.innerHTML =
+                const locationName =
                     locationData.address.city ||
                     locationData.address.town ||
                     locationData.address.village ||
-                    locationData.address.state;
+                    locationData.address.state ||
+                    "your location";
+
+                locationTarget.innerHTML = locationName;
+                hourlyRainTitle.innerHTML = `Rain in the next 24 hours in ${locationName}`;
 
 
                 // Rain Probability
                 const times = data.hourly.time;
                 const rain = data.hourly.precipitation_probability;
-                const next24Hours = times.slice(0, 24);
-                const currentHourIndex = Math.max(0, times.indexOf(data.current.time));
+                const nextHourIndex = times.findIndex(function(time)
+                {
+                    return time > data.current.time;
+                });
+                const currentHourIndex = nextHourIndex === -1
+                    ? times.length - 1
+                    : Math.max(0, nextHourIndex - 1);
+                const forecastStartIndex = Math.max(0, currentHourIndex - 1);
+                const currentTileIndex = currentHourIndex - forecastStartIndex;
+                const next24Hours = times.slice(forecastStartIndex, forecastStartIndex + 24);
                 const currentRainProbability = rain[currentHourIndex] ?? 0;
 
                 rainProbabilityTarget.innerHTML = `বর্তমান বৃষ্টির সম্ভাবনা: ${currentRainProbability}%`;
@@ -121,23 +134,26 @@ async function main()
 
                 hourlyRainList.innerHTML = next24Hours.map(function(time, index)
                 {
+                    const hourlyIndex = forecastStartIndex + index;
                     const hour = new Date(time).toLocaleTimeString([], {
                         hour: "numeric",
                         minute: "2-digit"
                     });
+                    const currentClass = index === currentTileIndex ? " hourly-rain-current" : "";
 
                     return `
-                        <article class="hourly-rain-item">
+                        <article class="hourly-rain-item${currentClass}">
                             <span class="hourly-rain-time">${hour}</span>
                             <i class="bi bi-cloud-rain hourly-rain-icon" aria-hidden="true"></i>
-                            <strong>${rain[index] ?? 0}%</strong>
+                            <strong>${rain[hourlyIndex] ?? 0}%</strong>
                         </article>
                     `;
                 }).join("");
 
                 for(let i = 0; i < next24Hours.length; i++)
                 {
-                    console.log(times[i], rain[i] + "%");
+                    const hourlyIndex = forecastStartIndex + i;
+                    console.log(times[hourlyIndex], rain[hourlyIndex] + "%");
                 }
             }
             catch(arr)

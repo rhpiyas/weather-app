@@ -181,6 +181,10 @@ body {
 	text-align: center;
 }
 
+.hourly-rain-current {
+	background: rgba(34, 197, 94, 0.38);
+}
+
 .hourly-rain-time {
 	font-size: 0.78rem;
 	color: var(--text-soft);
