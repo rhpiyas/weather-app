@@ -11,6 +11,7 @@ A simple and responsive Weather App built using **HTML**, **CSS**, and **JavaScr
 - ⚡ Fetch API with Async/Await
 - 🚨 Error handling using Try-Catch
 - 📱 Simple and responsive user interface
+- 🌆 Background Image
 
 ## 🛠️ Technologies Used
 
@@ -27,7 +28,7 @@ weather-app/
 │── index.html
 │── style.css
 │── index.js
-└── README.md
+└── README.md | gitignore
 ```
 
 ## 🚀 Getting Started
