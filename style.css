@@ -29,11 +29,15 @@ body {
 .page-content {
 	flex: 1;
 	display: grid;
-	place-items: center;
+	grid-template-columns: minmax(280px, 420px) minmax(0, 1fr);
+	align-items: center;
+	gap: 20px;
+	width: min(1100px, 100%);
+	margin: 0 auto;
 }
 
 .app-card {
-    width: min(92%, 420px);
+    width: 100%;
     background: var(--card-bg);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
@@ -74,6 +78,61 @@ body {
 .rain {
     font-size: 1.05rem;
     color: var(--text-soft);
+}
+
+.hourly-rain {
+	width: 100%;
+	padding: 28px;
+	background: var(--card-bg);
+	backdrop-filter: blur(14px);
+	-webkit-backdrop-filter: blur(14px);
+	border: 1px solid var(--card-border);
+	border-radius: 24px;
+	box-shadow: 0 18px 40px var(--shadow);
+	text-align: left;
+}
+
+.hourly-rain h2 {
+	font-size: 1.05rem;
+	margin-bottom: 12px;
+}
+
+.hourly-rain-list {
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	gap: 10px;
+}
+
+.hourly-rain-item {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 8px;
+	padding: 12px 8px;
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	border-radius: 14px;
+	background: rgba(255, 255, 255, 0.1);
+	text-align: center;
+}
+
+.hourly-rain-time {
+	font-size: 0.78rem;
+	color: var(--text-soft);
+	white-space: nowrap;
+}
+
+.hourly-rain-icon {
+	color: #bfe3ff;
+	font-size: 1.35rem;
+}
+
+.hourly-rain-item strong {
+	font-size: 0.95rem;
+}
+
+.hourly-rain-status {
+	color: var(--text-soft);
+	font-size: 0.9rem;
 }
 
 .footer {
@@ -177,9 +236,28 @@ body {
 }
 
 @media (max-width: 640px) {
+	.page-content {
+		grid-template-columns: 1fr;
+		align-items: start;
+	}
+
+	.hourly-rain-list {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+
 	.footer {
 		flex-direction: column;
 		text-align: center;
+	}
+}
+
+@media (max-width: 420px) {
+	.hourly-rain {
+		padding: 20px 16px;
+	}
+
+	.hourly-rain-list {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
 	}
 }
 

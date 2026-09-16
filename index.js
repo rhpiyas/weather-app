@@ -3,6 +3,7 @@ async function main()
     let target = document.getElementsByClassName("value")[0]
     let target2 = document.getElementsByClassName("rain")[0]
     let locationTarget = document.getElementsByClassName("city")[0]
+    let hourlyRainList = document.getElementsByClassName("hourly-rain-list")[0]
 
     navigator.geolocation.getCurrentPosition(
         async function(position)
@@ -54,8 +55,25 @@ async function main()
                 // Rain Probability
                 const times = data.hourly.time;
                 const rain = data.hourly.precipitation_probability;
+                const next24Hours = times.slice(0, 24);
 
-                for(let i = 0; i < times.length; i++)
+                hourlyRainList.innerHTML = next24Hours.map(function(time, index)
+                {
+                    const hour = new Date(time).toLocaleTimeString([], {
+                        hour: "numeric",
+                        minute: "2-digit"
+                    });
+
+                    return `
+                        <article class="hourly-rain-item">
+                            <span class="hourly-rain-time">${hour}</span>
+                            <i class="bi bi-cloud-rain hourly-rain-icon" aria-hidden="true"></i>
+                            <strong>${rain[index] ?? 0}%</strong>
+                        </article>
+                    `;
+                }).join("");
+
+                for(let i = 0; i < next24Hours.length; i++)
                 {
                     console.log(times[i], rain[i] + "%");
                 }
@@ -64,6 +82,7 @@ async function main()
             {
                 target.innerHTML = "404 Not found";
                 locationTarget.innerHTML = "Location unavailable";
+                hourlyRainList.innerHTML = "<p class=\"hourly-rain-status\">Hourly forecast unavailable.</p>";
             }
         },
 
@@ -72,6 +91,7 @@ async function main()
             console.log("Unable to get your location.");
             target.innerHTML = "Location unavailable";
             locationTarget.innerHTML = "Location unavailable";
+            hourlyRainList.innerHTML = "<p class=\"hourly-rain-status\">Hourly forecast unavailable.</p>";
         }
     );
 }
