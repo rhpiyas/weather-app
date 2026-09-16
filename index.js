@@ -1,9 +1,34 @@
 async function main()
 {
+    let dateTarget = document.getElementsByClassName("date-value")[0]
+    let timeTarget = document.getElementsByClassName("time-value")[0]
+    let timezoneTarget = document.getElementsByClassName("timezone-value")[0]
     let target = document.getElementsByClassName("value")[0]
     let target2 = document.getElementsByClassName("rain")[0]
     let locationTarget = document.getElementsByClassName("city")[0]
     let hourlyRainList = document.getElementsByClassName("hourly-rain-list")[0]
+
+    function updateCurrentDateTime()
+    {
+        const now = new Date();
+        const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+        dateTarget.innerHTML = now.toLocaleDateString([], {
+            weekday: "long",
+            year: "numeric",
+            month: "long",
+            day: "numeric"
+        });
+        timeTarget.innerHTML = now.toLocaleTimeString([], {
+            hour: "numeric",
+            minute: "2-digit",
+            second: "2-digit"
+        });
+        timezoneTarget.innerHTML = timeZone;
+    }
+
+    updateCurrentDateTime();
+    setInterval(updateCurrentDateTime, 1000);
 
     navigator.geolocation.getCurrentPosition(
         async function(position)

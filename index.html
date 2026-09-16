@@ -9,13 +9,22 @@
 </head>
 <body>
 	<main class="page-content">
-		<div class="app-card">
-			<h1 class="title">Weather App</h1>
-			<h3 class="city">Loading your location...</h3>
+		<div class="weather-column">
+			<section class="current-time" aria-labelledby="current-time-title">
+				<h2 id="current-time-title">Current date and time</h2>
+				<p class="date-value" aria-live="polite">Loading date...</p>
+				<p class="time-value" aria-live="polite">Loading time...</p>
+				<p class="timezone-value" aria-live="polite">Loading time zone...</p>
+			</section>
 
-			<div class="weather-card">
-				<h2 class="value">Loading....</h2>
-				<h2 class="rain"></h2>
+			<div class="app-card">
+				<h1 class="title">Weather App</h1>
+				<h3 class="city">Loading your location...</h3>
+
+				<div class="weather-card">
+					<h2 class="value">Loading....</h2>
+					<h2 class="rain"></h2>
+				</div>
 			</div>
 		</div>
 
