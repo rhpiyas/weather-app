@@ -22,7 +22,7 @@ body {
 	align-items: stretch;
 	background:
 		linear-gradient(135deg, rgba(7, 33, 65, 0.7), rgba(14, 116, 144, 0.34)),
-		url("dhaka.webp") center / cover no-repeat fixed;
+		url("assets/dhaka.webp") center / cover no-repeat fixed;
     color: var(--text-main);
     padding: 24px;
 	gap: 20px;
