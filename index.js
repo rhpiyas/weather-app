@@ -10,6 +10,7 @@ async function main()
     let hourlyRainTitle = document.getElementById("hourly-rain-title")
     let rainProbabilityTarget = document.getElementsByClassName("rain-probability")[0]
     let adviceTarget = document.getElementsByClassName("advice-message")[0]
+    let title = document.getElementsByTagName("title")[0]
 
     function getRainAdvice(probability)
     {
@@ -112,6 +113,7 @@ async function main()
 
                 locationTarget.innerHTML = locationName;
                 hourlyRainTitle.innerHTML = `Rain in the next 24 hours in ${locationName}`;
+                title.innerHTML = "Amar Weather - " + locationName
 
 
                 // Rain Probability
