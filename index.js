@@ -64,7 +64,25 @@ async function main()
     updateCurrentDateTime();
     setInterval(updateCurrentDateTime, 1000);
 
-    navigator.geolocation.getCurrentPosition(
+    function getLocation()
+    {
+        return new Promise(function(resolve, reject)
+        {
+            if(!navigator.geolocation)
+            {
+                reject(new Error("Geolocation is not supported by this browser."));
+                return;
+            }
+
+            navigator.geolocation.getCurrentPosition(resolve, reject, {
+                enableHighAccuracy: false,
+                timeout: 15000,
+                maximumAge: 300000
+            });
+        });
+    }
+
+    getLocation().then(
         async function(position)
         {
             const latitude = position.coords.latitude;
@@ -95,21 +113,35 @@ async function main()
                 target.innerHTML = data.current.temperature_2m + " °C";
 
 
-                // Location Name
-                const locationRaw = await fetch(
-                    `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`
-                );
+                // Reverse geocoding is optional; weather data should still work
+                // when the location-name service is temporarily unavailable.
+                let locationName = "your location";
 
-                const locationData = await locationRaw.json();
+                try
+                {
+                    const locationRaw = await fetch(
+                        `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`
+                    );
 
-                console.log(locationData);
+                    if(!locationRaw.ok)
+                    {
+                        throw new Error(`Reverse geocoding failed: ${locationRaw.status}`);
+                    }
 
-                const locationName =
-                    locationData.address.city ||
-                    locationData.address.town ||
-                    locationData.address.village ||
-                    locationData.address.state ||
-                    "your location";
+                    const locationData = await locationRaw.json();
+                    console.log(locationData);
+
+                    locationName =
+                        locationData.address?.city ||
+                        locationData.address?.town ||
+                        locationData.address?.village ||
+                        locationData.address?.state ||
+                        locationName;
+                }
+                catch(error)
+                {
+                    console.warn("Unable to determine the location name.", error);
+                }
 
                 locationTarget.innerHTML = locationName;
                 hourlyRainTitle.innerHTML = `Rain in the next 24 hours in ${locationName}`;
@@ -170,7 +202,7 @@ async function main()
 
         function(error)
         {
-            console.log("Unable to get your location.");
+            console.warn("Unable to get your location.", error);
             target.innerHTML = "Location unavailable";
             locationTarget.innerHTML = "Location unavailable";
             rainProbabilityTarget.innerHTML = "বর্তমান বৃষ্টির সম্ভাবনা পাওয়া যায়নি";
